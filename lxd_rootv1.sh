@@ -31,8 +31,8 @@ echo "[+] Mounting host root filesystem to $1"
 lxc config device add "$1" rootdisk disk source=/ path=/mnt/root recursive=true
 
 echo "[+] Using container to add $USER to /etc/sudoers"
-lxc exec "$1" -- /bin/sh -c \
-    "echo $USER ALL=(ALL) NOPASSWD: ALL >> /mnt/root/etc/sudoers"
+CMD="'echo $USER ALL=(ALL) NOPASSWD: ALL' >> /mnt/root/etc/sudoers"
+lxc exec "$1" -- /bin/sh -c $CMD
 
 echo "[+] Unmounting host root filesystem from $1"
 lxc config device remove "$1" rootdisk
